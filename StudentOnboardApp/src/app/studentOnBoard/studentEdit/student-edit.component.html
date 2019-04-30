@@ -1,0 +1,285 @@
+<div class="card">
+  <div class="card-header">
+    {{pageTitle}}
+  </div>
+
+  <div class="card-body">
+    <form novalidate
+          (ngSubmit)="saveStudent()"
+          [formGroup]="studentForm">
+
+          <div class="form-group row mb-2">
+            <label class="col-md-2 col-form-label" for="studentName"> Student Name</label>
+            <div class="col-md-8">
+              <input class="form-control" id="studentName" type="text" placeholder="Student Name" formControlName="studentName" [ngClass]="{'is-invalid' : (studentForm.get('studentName').touched || studentForm.get('studentName').dirty) && !studentForm.get('studentName').valid }"
+              />
+              <span class="invalid-feedback">
+                    <span *ngIf="studentForm.get('studentName').errors?.required">
+                        Please enter Student Name
+                    </span>
+              </span>
+            </div>
+          </div>
+    
+    
+          <div class="form-group row mb-2">
+            <label class="col-md-2 col-form-label" for="category"> Category</label>
+            <div class="col-md-8">
+              <select class="form-control" id="category" formControlName="category" [ngClass]="{'is-invalid' : (studentForm.get('category').touched || studentForm.get('category').dirty) && !studentForm.get('category').valid }">
+                      <option value=""
+                              disabled
+                              selected
+                              hidden>Select Category</option>
+                      <option value="international">International</option>
+                      <option value="local">Local</option>
+                    </select>
+    
+              <span class="invalid-feedback">
+                    <span *ngIf="studentForm.get('category').errors?.required">
+                        Please select Category
+                    </span>
+              </span>
+            </div>
+          </div>
+    
+          <div formGroupName="documents">
+            <div class="form-group row mb-2">
+              <label class="col-md-2 col-form-label" for="domicileSubmitted"> Documents</label>
+              <label class="col-md-2"> Domicile</label>
+              <span>&#42;</span>
+              <div class="col-md-1">
+                <input class="form-control" id="domicileSubmitted" type="checkbox" formControlName="domicileSubmitted" [ngClass]="{'is-invalid' :  studentForm.get('documents').errors || 
+                                                                                                                                              ((studentForm.get('documents.domicileSubmitted').touched ||
+                                                                                                                                              studentForm.get('documents.domicileSubmitted').dirty) && 
+                                                                                                                                              !studentForm.get('documents.domicileSubmitted').valid ) }"
+                />
+                <span class="invalid-feedback">
+                    <span *ngIf="studentForm.get('documents.domicileSubmitted').errors?.required">
+                        Please select document
+                    </span>
+                </span>
+              </div>
+            </div>
+    
+            <div class="form-group row mb-2">
+              <label class="col-md-2 col-form-label" for="birthCertificateSubmitted"></label>
+              <label class="col-md-2"> Birth Certificate</label>
+              <span>&#42;</span>
+              <div class="col-md-1">
+                <input class="form-control" id="birthCertificateSubmitted" type="checkbox" formControlName="birthCertificateSubmitted" [ngClass]="{'is-invalid' :  studentForm.get('documents').errors ||
+                                                                                                                                              ((studentForm.get('documents.birthCertificateSubmitted').touched ||
+                                                                                                                                              studentForm.get('documents.birthCertificateSubmitted').dirty) && 
+                                                                                                                                              !studentForm.get('documents.birthCertificateSubmitted').valid ) }"
+                />
+                <span class="invalid-feedback">
+                    <span *ngIf="studentForm.get('documents.birthCertificateSubmitted').errors?.required">
+                        Please select document
+                    </span>
+                </span>
+              </div>
+            </div>
+    
+            <div class="form-group row mb-2">
+              <label class="col-md-2 col-form-label" for="markSheetsSubmitted"></label>
+              <label class="col-md-2"> Marksheets</label>
+              <span>&#42;</span>
+              <div class="col-md-1">
+                <input class="form-control" id="markSheetsSubmitted" type="checkbox" formControlName="markSheetsSubmitted" [ngClass]="{'is-invalid' :  studentForm.get('documents').errors ||
+                                                                                                                                              ((studentForm.get('documents.markSheetsSubmitted').touched ||
+                                                                                                                                              studentForm.get('documents.markSheetsSubmitted').dirty) && 
+                                                                                                                                              !studentForm.get('documents.markSheetsSubmitted').valid ) }"
+                />
+                <span class="invalid-feedback">
+                    <span *ngIf="studentForm.get('documents.markSheetsSubmitted').errors?.required">
+                        Please select document
+                    </span>
+                </span>
+              </div>
+            </div>
+    
+            <div class="form-group row mb-2">
+              <label class="col-md-2 col-form-label" for="policeClearanceSubmitted"></label>
+              <label class="col-md-2"> Police Clearance</label>
+              <span *ngIf="isInternational">&#42;</span>
+              <span *ngIf="!isInternational" style="width: 7px; display: inline-block"></span>
+              <div class="col-md-1">
+                <input class="form-control" id="policeClearanceSubmitted" type="checkbox" formControlName="policeClearanceSubmitted" [ngClass]="{'is-invalid' :  studentForm.get('documents').errors ||
+                                                                                                                                              ((studentForm.get('documents.policeClearanceSubmitted').touched ||
+                                                                                                                                              studentForm.get('documents.policeClearanceSubmitted').dirty) && 
+                                                                                                                                              !studentForm.get('documents.policeClearanceSubmitted').valid ) }"
+                />
+                <span class="invalid-feedback">
+                    <span *ngIf="studentForm.get('documents.policeClearanceSubmitted').errors?.required">
+                        Please select document
+                    </span>
+                </span>
+              </div>
+            </div>
+    
+            <div class="form-group row mb-2">
+              <label class="col-md-2 col-form-label" for="passportSubmitted"></label>
+              <label class="col-md-2"> Passport</label>
+              <span *ngIf="isInternational">&#42;</span>
+              <span *ngIf="!isInternational" style="width: 7px; display: inline-block"></span>
+              <div class="col-md-1">
+                <input class="form-control" id="passportSubmitted" type="checkbox" formControlName="passportSubmitted" [ngClass]="{'is-invalid' :  studentForm.get('documents').errors ||
+                                                                                                                                              ((studentForm.get('documents.passportSubmitted').touched ||
+                                                                                                                                              studentForm.get('documents.passportSubmitted').dirty) && 
+                                                                                                                                              !studentForm.get('documents.passportSubmitted').valid ) }"
+                />
+                <span class="invalid-feedback">
+                    <span *ngIf="studentForm.get('documents.passportSubmitted').errors?.required">
+                        Please select document
+                    </span>
+                </span>
+              </div>
+            </div>
+    
+            <div class="form-group row mb-2">
+              <label class="col-md-2 col-form-label" for="declarationSubmitted"></label>
+              <label class="col-md-2"> Declaration</label>
+              <span>&#42;</span>
+              <div class="col-md-1">
+                <input class="form-control" id="declarationSubmitted" type="checkbox" formControlName="declarationSubmitted" [ngClass]="{'is-invalid' :  studentForm.get('documents').errors ||
+                                                                                                                                              ((studentForm.get('documents.declarationSubmitted').touched ||
+                                                                                                                                              studentForm.get('documents.declarationSubmitted').dirty) && 
+                                                                                                                                              !studentForm.get('documents.declarationSubmitted').valid ) }"
+                />
+                <span class="invalid-feedback">
+                    <span *ngIf="studentForm.get('documents.declarationSubmitted').errors?.required">
+                        Please select document
+                    </span>
+                </span>
+              </div>
+            </div>
+    
+          </div>
+    
+          <div class="form-group row mb-2">
+            <label class="col-md-2 col-form-label" for="dob">DOB</label>
+            <div class="col-md-8">
+              <input class="form-control" id="dob" type="date" placeholder="DOB" formControlName="dob" [ngClass]="{'is-invalid' : (studentForm.get('dob').touched || studentForm.get('dob').dirty) && !studentForm.get('dob').valid }"
+              />
+              <span class="invalid-feedback">
+                    <span *ngIf="studentForm.get('dob').errors?.required">
+                        Please enter date of birth
+                    </span>
+              </span>
+            </div>
+          </div>
+    
+          <div class="form-group row mb-2">
+            <label class="col-md-2 col-form-label" for="fatherName"> Father's Name</label>
+            <div class="col-md-8">
+              <input class="form-control" id="fatherName" type="text" placeholder="Father's Name" formControlName="fatherName" [ngClass]="{'is-invalid' : (studentForm.get('fatherName').touched || studentForm.get('fatherName').dirty) && !studentForm.get('fatherName').valid }"
+              />
+              <span class="invalid-feedback">
+                    <span *ngIf="studentForm.get('fatherName').errors?.required">
+                        Please enter Father's name
+                    </span>
+              </span>
+            </div>
+          </div>
+    
+          <div class="form-group row mb-2">
+            <label class="col-md-2 col-form-label" for="motherName"> Mother's Name</label>
+            <div class="col-md-8">
+              <input class="form-control" id="motherName" type="text" placeholder="Mother's Name" formControlName="motherName" [ngClass]="{'is-invalid' : (studentForm.get('motherName').touched || studentForm.get('motherName').dirty) && !studentForm.get('motherName').valid }"
+              />
+              <span class="invalid-feedback">
+                    <span *ngIf="studentForm.get('motherName').errors?.required">
+                        Please enter Father's name
+                    </span>
+              </span>
+            </div>
+          </div>
+    
+          <div class="form-group row mb-2">
+            <label class="col-md-2 col-form-label" for="lastClassScore">Last Class Score</label>
+            <div class="col-md-8">
+              <input class="form-control" id="lastClassScore" type="number" placeholder="% Marks" formControlName="lastClassScore" [ngClass]="{'is-invalid' : (studentForm.get('lastClassScore').touched || studentForm.get('lastClassScore').dirty) && !studentForm.get('lastClassScore').valid }"
+              />
+              <span class="invalid-feedback">
+                    <span *ngIf="studentForm.get('lastClassScore').errors?.required">
+                        Please enter Mother's name
+                    </span>
+              </span>
+            </div>
+          </div>
+
+          <div class="form-group row mb-4">
+            <div class="offset-md-3 col col-md-4">
+              <button *ngIf="isDisabled" 
+                      class='btn btn-outline-secondary' 
+                      style='width:80px' (click)=onBack()>
+                        <i class = 'fa fa-chevron-left'></i> Back
+              </button>
+              <button *ngIf="(!isDisabled && !isSave)" 
+                      class='btn btn-outline-secondary' 
+                      style='width:90px' (click)=onCancel()> 
+                        Cancel
+              </button>
+              <button *ngIf="isSave" 
+                      class="btn btn-primary mr-3" 
+                      type="submit" 
+                      style="width:80px" 
+                      title="studentForm.valid ? 'Submit your information' : 'Disabled untill required information is filled'"
+                      [disabled]="!studentForm.valid || 
+                                  ( studentForm.get('category').value === 'international' && 
+                                    ( !studentForm.get('documents.domicileSubmitted').value ===true || 
+                                      !studentForm.get('documents.birthCertificateSubmitted').value ===true ||
+                                      !studentForm.get('documents.markSheetsSubmitted').value ===true ||
+                                      !studentForm.get('documents.policeClearanceSubmitted').value === true ||
+                                      !studentForm.get('documents.passportSubmitted').value ===true ||
+                                      !studentForm.get('documents.declarationSubmitted').value ===true
+                                    ) 
+                                  ) 
+                                  ||
+                                  ( studentForm.get('category').value === 'local' &&   
+                                    ( !studentForm.get('documents.domicileSubmitted').value ===true ||
+                                      !studentForm.get('documents.birthCertificateSubmitted').value ===true ||
+                                      !studentForm.get('documents.markSheetsSubmitted').value ===true ||
+                                      !studentForm.get('documents.declarationSubmitted').value ===true
+                                    ) 
+                                  )"> Save          
+              </button>
+              <button *ngIf="(!isSave && !isDisabled)" 
+                      (click)="updateStudent()" 
+                      class="btn btn-primary mr-3" 
+                      type="button" 
+                      style="width:80px"
+                      title="studentForm.valid ? 'Submit your information' : 'Disabled untill required information is filled'" 
+                      [disabled]="!studentForm.valid || !studentForm.dirty  || 
+                                  ( studentForm.get('category').value === 'international' && 
+                                    ( !studentForm.get('documents.domicileSubmitted').value ===true || 
+                                      !studentForm.get('documents.birthCertificateSubmitted').value ===true ||
+                                      !studentForm.get('documents.markSheetsSubmitted').value ===true ||
+                                      !studentForm.get('documents.policeClearanceSubmitted').value === true ||
+                                      !studentForm.get('documents.passportSubmitted').value ===true ||
+                                      !studentForm.get('documents.declarationSubmitted').value ===true
+                                    ) 
+                                  ) 
+                                  ||
+                                  ( studentForm.get('category').value === 'local' &&   
+                                    ( !studentForm.get('documents.domicileSubmitted').value ===true ||
+                                      !studentForm.get('documents.birthCertificateSubmitted').value ===true ||
+                                      !studentForm.get('documents.markSheetsSubmitted').value ===true ||
+                                      !studentForm.get('documents.declarationSubmitted').value ===true
+                                    ) 
+                                  )"> Update          
+              </button>
+              <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+              />
+            </div>
+          </div>
+
+
+          {{studentForm.valid}}
+    
+    </form>
+  </div>
+
+  <div class="alert alert-danger"
+       *ngIf="errorMessage">{{errorMessage}}
+  </div>
+</div>
